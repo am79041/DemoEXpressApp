@@ -9,6 +9,7 @@ app.get("/", (req, res) => {
   interval = setInterval(() => {
     console.log("Interval running");
   }, 5000);
+  console.log(`Amit is here`);
   res.status(200).json({ msg: "success" });
 });
 
