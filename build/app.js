@@ -1,37 +1,21 @@
-"use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-require("dotenv/config");
-const app = (0, express_1.default)();
+import express from "express";
+import bodyParser from "body-parser";
+import "dotenv/config";
+import { fetchTrends } from "./lib/functions/fetchTrends.js";
+const app = express();
 const port = process.env.PORT || 5000;
-let interval;
-app.get("/", (req, res) => {
-    interval = setInterval(() => __awaiter(void 0, void 0, void 0, function* () {
-        const data = yield fetch("https://api.twitter.com/1.1/trends/place.json?id=1", {
-            headers: {
-                Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
-            },
-        });
-        const json = yield data.json();
-        console.log(json);
-    }), 5000);
-    console.log(`Amit is here`);
-    res.status(200).json({ msg: "success" });
+app.use(bodyParser.json());
+app.post("/", async (req, res) => {
+    const places = req.body;
+    try {
+        const trendsResult = await fetchTrends(places);
+        res.status(200).json(trendsResult);
+    }
+    catch (err) {
+        res.status(400).json({ error: "Bad request" });
+    }
 });
-app.get("/stop", (req, res) => {
-    clearInterval(interval);
-    res.status(200).json({ msg: "job stopped" });
+app.all("*", (req, res) => {
+    res.status(400).json({ msg: "method now allowd" });
 });
-app.listen(port, () => console.log(`Server is running at PORT: ${port}`));
+app.listen(port, () => console.log(`Server started at ${port}`));
