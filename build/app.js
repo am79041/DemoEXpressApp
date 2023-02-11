@@ -16,6 +16,6 @@ app.post("/", async (req, res) => {
     }
 });
 app.all("*", (req, res) => {
-    res.status(400).json({ msg: "method now allowd" });
+    res.status(400).json({ msg: "method now allowed" });
 });
 app.listen(port, () => console.log(`Server started at ${port}`));
