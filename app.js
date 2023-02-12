@@ -1,7 +1,8 @@
 import express from "express";
 import bodyParser from "body-parser";
 import "dotenv/config";
-import { fetchTrends } from "../lib/fetchTrends.js";
+
+import { fetchTrends } from "./lib/fetchTrends.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
