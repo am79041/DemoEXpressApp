@@ -2,29 +2,20 @@
   "name": "expressapi",
   "version": "1.0",
   "description": "A simple server with cron jobs",
-  "main": "app.ts",
+  "main": "app.js",
   "type": "module",
-  "types": "./types.d.ts",
   "scripts": {
-    "build": "tsc",
-    "start": "node ./build/app.js",
-    "postinstall": "npm run build",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Amit Kumar",
   "license": "MIT",
   "dependencies": {
-    "@types/aws-sdk": "^2.7.0",
-    "@types/express": "^4.17.16",
-    "@types/node-fetch": "^2.6.2",
     "aws-sdk": "^2.1313.0",
     "body-parser": "^1.20.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "node-fetch": "^3.3.0"
   },
-  "devDependencies": {
-    "@types/node": "^18.11.18",
-    "typescript": "^4.9.4"
-  }
+  "devDependencies": {}
 }
